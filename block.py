@@ -13,10 +13,12 @@ class Block:
         self.rotation_state = 0
         self.colors = Colors.get_cell_colors()
 
+    # смещение блока
     def move(self, rows, columns):
         self.row_offset += rows
         self.column_offset += columns
 
+    # получить координаты блока
     def get_cell_positions(self):
         tiles = self.cells[self.rotation_state]
         moved_tiles = []
@@ -25,16 +27,19 @@ class Block:
             moved_tiles.append(position)
         return moved_tiles
 
+    # повернуть блок
     def rotate(self):
         self.rotation_state += 1
         if self.rotation_state == len(self.cells):
             self.rotation_state = 0
 
+    # отменить поворот
     def undo_rotation(self):
         self.rotation_state -= 1
         if self.rotation_state == 0:
             self.rotation_state = len(self.cells) - 1
 
+    # отрисовка блока
     def draw(self, screen, offset_x, offset_y):
         tiles = self.get_cell_positions()
         for tile in tiles:

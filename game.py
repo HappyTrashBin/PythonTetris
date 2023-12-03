@@ -22,9 +22,11 @@ class Game:
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.01)
 
+    # обновление текущего счёта
     def update_score(self, lines_cleared):
         self.score += 100 * lines_cleared
 
+    # выбрать случайный блок
     def get_random_block(self):
         if len(self.blocks) == 0:
             self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
@@ -32,6 +34,7 @@ class Game:
         self.blocks.remove(block)
         return block
 
+    # сдвинуть влево, вправо, вниз
     def move_left(self):
         self.current_block.move(0, -1)
         if not self.block_inside() or not self.block_fits():
@@ -48,6 +51,7 @@ class Game:
             self.current_block.move(-1, 0)
             self.lock_block()
 
+    # зафиксировать положение блока
     def lock_block(self):
         tiles = self.current_block.get_cell_positions()
         for position in tiles:
@@ -65,6 +69,7 @@ class Game:
             self.game_over_sound.play()
             self.game_over_sound.set_volume(0.01)
 
+    # обновить игровое поле
     def reset(self):
         self.grid.reset()
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
@@ -74,6 +79,7 @@ class Game:
             self.records.add_record(self.score)
         self.score = 0
 
+    # проверка на наличие свободного для блока пространства
     def block_fits(self):
         tiles = self.current_block.get_cell_positions()
         for tile in tiles:
@@ -81,6 +87,7 @@ class Game:
                 return False
         return True
 
+    # поворот блока
     def rotate(self):
         self.current_block.rotate()
         if not self.block_inside() or not self.block_fits():
@@ -89,6 +96,7 @@ class Game:
             self.rotate_sound.play()
             self.rotate_sound.set_volume(0.01)
 
+    # проверка на выход за границу игрового поля
     def block_inside(self):
         tiles = self.current_block.get_cell_positions()
         for tile in tiles:
@@ -96,7 +104,8 @@ class Game:
                 return False
         return True
 
-    def draw_next_block(self, screen):
+    # отрисовка текущего блока на игровом поле и следующего блока в соответствующем месте
+    def draw_blocks(self, screen):
         self.grid.draw(screen)
         self.current_block.draw(screen, 11, 11)
         if self.next_block.id == 3:

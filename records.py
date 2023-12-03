@@ -7,9 +7,11 @@ class Record:
         self.max = 10
         self.real_max = 0
 
+    # получить элемент класса по индексу
     def __getitem__(self, i):
         return self.numbers[i]
 
+    # добавить элемент в класс
     def add_record(self, number):
         if self.real_max < self.max:
             self.numbers[self.real_max] = number
@@ -19,6 +21,7 @@ class Record:
                 self.numbers[i] = self.numbers[i - 1]
             self.numbers[0] = number
 
+    # вывести все элементы класса в виде текста
     def print_records(self, screen, font):
         for i in range(len(self.numbers) - 1):
             filler_string = str(i) + ". "
