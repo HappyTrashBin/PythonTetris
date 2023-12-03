@@ -1,5 +1,6 @@
 from colors import Colors
 
+
 class Record:
     def __init__(self):
         self.numbers = [0 for i in range(11)]
@@ -14,8 +15,8 @@ class Record:
             self.numbers[self.real_max] = number
             self.real_max += 1
         else:
-            for i in range(len(self.numbers)-1, 0, -1):
-                self.numbers[i] = self.numbers[i-1]
+            for i in range(len(self.numbers) - 1, 0, -1):
+                self.numbers[i] = self.numbers[i - 1]
             self.numbers[0] = number
 
     def print_records(self, screen, font):

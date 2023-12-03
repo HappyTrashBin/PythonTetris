@@ -23,8 +23,7 @@ class Game:
         pygame.mixer.music.set_volume(0.01)
 
     def update_score(self, lines_cleared):
-        if lines_cleared == 1:
-            self.score += 100
+        self.score += 100 * lines_cleared
 
     def get_random_block(self):
         if len(self.blocks) == 0:

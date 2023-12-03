@@ -23,8 +23,9 @@ clock = pygame.time.Clock()
 game = Game()
 
 GAME_UPDATE = pygame.USEREVENT
-pygame.time.set_timer(GAME_UPDATE, 20)
+pygame.time.set_timer(GAME_UPDATE, 200)
 pause = True
+difficulty = 0
 
 while True:
     for event in pygame.event.get():
@@ -49,6 +50,9 @@ while True:
                 game.reset()
         if event.type == GAME_UPDATE and not game.game_over and not pause:
             game.move_down()
+            if difficulty < 125:
+                difficulty += 0.1
+                pygame.time.set_timer(GAME_UPDATE, 200-round(difficulty))
 
     score_value_surface = title_font.render(str(game.score), True, Colors.white)
 
