@@ -2,11 +2,13 @@ from grid import Grid
 from blocks import *
 import random
 import pygame
+from records import Record
 
 
 class Game:
     def __init__(self):
         self.grid = Grid()
+        self.records = Record()
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
@@ -14,19 +16,15 @@ class Game:
         self.score = 0
         self.rotate_sound = pygame.mixer.Sound("Sounds/block_rotate.mp3")
         self.clear_sound = pygame.mixer.Sound("Sounds/line_clear.mp3")
+        self.game_over_sound = pygame.mixer.Sound("Sounds/game_over.mp3")
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.01)
 
-    def update_score(self, lines_cleared, move_down_points):
+    def update_score(self, lines_cleared):
         if lines_cleared == 1:
             self.score += 100
-        elif lines_cleared == 2:
-            self.score += 300
-        elif lines_cleared == 3:
-            self.score += 500
-        self.score += move_down_points
 
     def get_random_block(self):
         if len(self.blocks) == 0:
@@ -55,21 +53,26 @@ class Game:
         tiles = self.current_block.get_cell_positions()
         for position in tiles:
             self.grid.grid[position.row][position.column] = self.current_block.id
+        self.score += 1
         self.current_block = self.next_block
         self.next_block = self.get_random_block()
         rows_cleared = self.grid.clear_full_rows()
         if rows_cleared > 0:
             self.clear_sound.play()
             self.clear_sound.set_volume(0.01)
-            self.update_score(rows_cleared, 0)
+            self.update_score(rows_cleared)
         if not self.block_fits():
             self.game_over = True
+            self.game_over_sound.play()
+            self.game_over_sound.set_volume(0.01)
 
     def reset(self):
         self.grid.reset()
         self.blocks = [IBlock(), JBlock(), LBlock(), OBlock(), SBlock(), TBlock(), ZBlock()]
         self.current_block = self.get_random_block()
         self.next_block = self.get_random_block()
+        if self.score > 0:
+            self.records.add_record(self.score)
         self.score = 0
 
     def block_fits(self):
@@ -94,14 +97,12 @@ class Game:
                 return False
         return True
 
-    def draw(self, screen):
+    def draw_next_block(self, screen):
         self.grid.draw(screen)
         self.current_block.draw(screen, 11, 11)
         if self.next_block.id == 3:
-            self.next_block.draw(screen, 255, 290)
+            self.next_block.draw(screen, 255, 420)
         elif self.next_block.id == 4:
-            self.next_block.draw(screen, 255, 270)
+            self.next_block.draw(screen, 255, 400)
         else:
-            self.next_block.draw(screen, 270, 270)
-
-    #79
+            self.next_block.draw(screen, 270, 400)

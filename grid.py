@@ -10,12 +10,6 @@ class Grid:
         self.grid = [[0 for i in range(self.num_cols)] for j in range(self.num_rows)]
         self.colors = Colors.get_cell_colors()
 
-    def print_grid(self):
-        for row in range(self.num_rows):
-            for column in range(self.num_cols):
-                print(self.grid[row][column], end=" ")
-            print()
-
     def is_inside(self, row, column):
         if 0 <= row < self.num_rows and 0 <= column < self.num_cols:
             return True
@@ -63,5 +57,3 @@ class Grid:
                 cell_rect = pygame.Rect(column * self.cell_size + 11, row * self.cell_size + 11, self.cell_size - 1,
                                         self.cell_size - 1)
                 pygame.draw.rect(screen, self.colors[cell_value], cell_rect)
-
-    #53
