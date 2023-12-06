@@ -8,22 +8,22 @@ class Block:
         self.id = id
         self.cells = {}
         self.cell_size = 30
-        self.row_offset = 0
-        self.column_offset = 0
+        self.row_block = 0
+        self.column_block = 0
         self.rotation_state = 0
         self.colors = Colors.get_cell_colors()
 
     # смещение блока
     def move(self, rows, columns):
-        self.row_offset += rows
-        self.column_offset += columns
+        self.row_block += rows
+        self.column_block += columns
 
     # получить координаты блока
     def get_cell_positions(self):
         tiles = self.cells[self.rotation_state]
         moved_tiles = []
         for position in tiles:
-            position = Position(position.row + self.row_offset, position.column + self.column_offset)
+            position = Position(position.row + self.row_block, position.column + self.column_block)
             moved_tiles.append(position)
         return moved_tiles
 

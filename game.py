@@ -17,6 +17,7 @@ class Game:
         self.rotate_sound = pygame.mixer.Sound("Sounds/block_rotate.mp3")
         self.clear_sound = pygame.mixer.Sound("Sounds/line_clear.mp3")
         self.game_over_sound = pygame.mixer.Sound("Sounds/game_over.mp3")
+        self.next = True
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
@@ -50,6 +51,18 @@ class Game:
         if not self.block_inside() or not self.block_fits():
             self.current_block.move(-1, 0)
             self.lock_block()
+
+    def move_down_in_main(self, screen):
+        self.current_block.move(1, 0)
+        tiles = self.current_block.get_cell_positions()
+        lowest_tile = 0
+        for tile in tiles:
+            if tile.row > lowest_tile:
+                lowest_tile = tile.row
+        if lowest_tile > (round(screen.get_height()/self.grid.cell_size) + 2):
+            self.current_block = self.next_block
+            self.next_block = self.get_random_block()
+            self.next = True
 
     # зафиксировать положение блока
     def lock_block(self):
@@ -107,7 +120,7 @@ class Game:
     # отрисовка текущего блока на игровом поле и следующего блока в соответствующем месте
     def draw_blocks(self, screen):
         self.grid.draw(screen)
-        self.current_block.draw(screen, 11, 11)
+        self.current_block.draw(screen, 11, -79)
         if self.next_block.id == 3:
             self.next_block.draw(screen, 255, 420)
         elif self.next_block.id == 4:
