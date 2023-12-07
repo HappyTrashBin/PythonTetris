@@ -26,6 +26,7 @@ class Button:
 
         self.button_sound = pygame.mixer.Sound("Sounds/button.mp3")
 
+    # создание кнопки, проверка кнопки на нажатие и зажатие
     def button_pressed(self, screen):
         mouse_pos = pygame.mouse.get_pos()
         if not self.color_lock:
@@ -39,6 +40,7 @@ class Button:
                 pygame.draw.rect(screen, self.pressed, self.button_rect, 0, 10)
                 self.button_sound.play()
                 self.button_sound.set_volume(0.01)
+                pygame.time.delay(300)
                 if not self.alreadyPressed:
                     self.next_page = True
                     self.alreadyPressed = True

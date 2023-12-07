@@ -11,6 +11,9 @@ class Colors:
     silver = (192, 192, 192)
     grey = (128, 128, 128)
 
+    gold = (255, 215, 0)
+    dark_orange = (255, 71, 0)
+
     # доступ к содержимому класса без создания и заполнения отдельного его экземпляра
     @classmethod
     def get_cell_colors(cls):

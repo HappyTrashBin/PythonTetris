@@ -18,6 +18,7 @@ class Game:
         self.clear_sound = pygame.mixer.Sound("Sounds/line_clear.mp3")
         self.game_over_sound = pygame.mixer.Sound("Sounds/game_over.mp3")
         self.next = True
+        self.rotate_flag = True
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
@@ -108,6 +109,11 @@ class Game:
         else:
             self.rotate_sound.play()
             self.rotate_sound.set_volume(0.01)
+
+    def rotate_main(self):
+        if self.rotate:
+            for i in range(random.randint(0, 3)):
+                self.current_block.rotate()
 
     # проверка на выход за границу игрового поля
     def block_inside(self):
