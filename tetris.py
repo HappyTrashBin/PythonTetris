@@ -92,6 +92,7 @@ while True:
 
                 # закрытие окна
                 if event.type == pygame.QUIT:
+                    game.records.save_records()
                     pygame.quit()
                     sys.exit()
 
