@@ -45,7 +45,7 @@ class Record:
             screen.blit(record_surface_index, (330, 106 + i * 20, 50, 50))
             filler_string = str(self.numbers[i])
             record_surface_score = font.render(filler_string, True, Colors.white)
-            screen.blit(record_surface_score, (360, 106 + i * 20, 50, 50))
+            screen.blit(record_surface_score, (370, 106 + i * 20, 50, 50))
         create_table(self.numbers)
         clear_all()
 

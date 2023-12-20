@@ -16,5 +16,5 @@ class Colors:
 
     # доступ к содержимому класса без создания и заполнения отдельного его экземпляра
     @classmethod
-    def get_cell_colors(cls):
+    def get_all_colors(cls):
         return [cls.black, cls.green, cls.red, cls.orange, cls.yellow, cls.purple, cls.cyan, cls.blue]

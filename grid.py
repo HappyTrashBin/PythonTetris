@@ -8,7 +8,7 @@ class Grid:
         self.num_cols = 10
         self.cell_size = 30
         self.grid = [[0 for i in range(self.num_cols)] for j in range(self.num_rows)]
-        self.colors = Colors.get_cell_colors()
+        self.colors = Colors.get_all_colors()
 
     # проверка на выход за границу игрового поля
     def is_inside(self, row, column):

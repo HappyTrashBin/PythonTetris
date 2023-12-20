@@ -5,23 +5,26 @@ from game import Game
 import random
 
 
-class Tetris:
+class drawing:
     def __init__(self):
-        self.main_title_font = pygame.font.Font(None, 100)
+        self.main_title_font = pygame.font.Font('BrassMono.ttf', 100)
+        self.lower_title_font = pygame.font.Font('BrassMono.ttf', 40)
         self.letters = ['T', 'E', 'T', 'R', 'I', 'S']
         self.game = Game()
-        self.next_number = True
         self.x_position = 0
         self.cell_size = Grid().cell_size
+        self.colors = Colors.get_all_colors()
+        self.game_over_text = self.lower_title_font.render("GAME OVER", True, Colors.white)
 
     # нарисовать заголовок
     def draw_title(self, screen):
         tetris_rect = pygame.Rect(100, 65, 300, 100)
-        tetris_surface = self.main_title_font.render('TETRIS', True, Colors.white)
         pygame.draw.rect(screen, Colors.black, tetris_rect, 0, 15)
         pygame.draw.rect(screen, Colors.white, tetris_rect, 3, 15)
-        screen.blit(tetris_surface, tetris_surface.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 7))
-        tetris_rect = pygame.Rect(100, 165, 300, 100)
+        for i in range(len(self.letters)):
+            tetris_surface = self.main_title_font.render(self.letters[i], True, self.colors[i+1])
+            screen.blit(tetris_surface,
+                        tetris_surface.get_rect(centerx=tetris_rect.centerx - 122 + 49*i, centery=tetris_rect.centery + 7))
 
     # нарисовать фон в виде игрового поля
     def draw_background(self, screen, rows, columns):
@@ -41,3 +44,11 @@ class Tetris:
         self.game.move_down_in_main(screen)
         self.game.rotate_main()
         self.game.rotate = False
+
+    def game_over(self, screen):
+        x, y = pygame.display.get_surface().get_size()
+        w, h = 250, 100
+        tetris_rect = pygame.Rect((x-w)/2, (y-h)/2, w, h)
+        pygame.draw.rect(screen, Colors.black, tetris_rect, 0, 15)
+        pygame.draw.rect(screen, Colors.grey, tetris_rect, 3, 15)
+        screen.blit(self.game_over_text, self.game_over_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))

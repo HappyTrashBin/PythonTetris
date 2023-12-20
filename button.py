@@ -15,7 +15,7 @@ class Button:
         self.active = Colors.grey
         self.pressed = Colors.white
 
-        self.font = pygame.font.Font(None, 40)
+        self.font = pygame.font.Font('BrassMono.ttf', 40)
         self.button_rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
         self.button_text = self.font.render(self.buttonText, True, Colors.black)

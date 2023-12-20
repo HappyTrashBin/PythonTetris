@@ -11,7 +11,7 @@ class Block:
         self.row_block = 0
         self.column_block = 0
         self.rotation_state = 0
-        self.colors = Colors.get_cell_colors()
+        self.colors = Colors.get_all_colors()
 
     # смещение блока
     def move(self, rows, columns):

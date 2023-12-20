@@ -3,21 +3,20 @@ import pygame
 from game import Game
 from colors import Colors
 from button import Button
-from drawing import Tetris
+from drawing import drawing
 from slider import Slider
 
 # pygame инициализация
 pygame.init()
 
 # текстовые элементы, фигуры и оформление главного меню
-title_font = pygame.font.Font(None, 40)
-lower_font = pygame.font.Font(None, 25)
+title_font = pygame.font.Font('BrassMono.ttf', 40)
+lower_font = pygame.font.Font('BrassMono.ttf', 20)
 score_text = title_font.render("Score", True, Colors.black)
 next_text = title_font.render("Next", True, Colors.black)
-game_over_text = title_font.render("GAME OVER", True, Colors.black)
 moving_modes_first = lower_font.render("turn off - block moves down ones per pressing", True, Colors.black)
 moving_modes_second = lower_font.render("turn on - block moves down while pressing", True, Colors.black)
-tetris = Tetris()
+tetris = drawing()
 
 score_rect = pygame.Rect(320, 45, 170, 50)
 record_rect = pygame.Rect(320, 100, 170, 210)
@@ -43,9 +42,9 @@ pause = True
 difficulty = 0
 moving_down_mode = False
 button_main = Button(150, 455, 200, 70, 'Play', False)
-button_next = Button(150, 20, 200, 70, 'Begin game', False)
-button_change_mode = Button(75, 100, 350, 70, 'Change button mode', True)
-difficulty_slider = Slider(150, 220, 200, 100, 'Difficulty')
+button_next = Button(50, 20, 400, 70, 'Begin game', False)
+button_change_mode = Button(50, 100, 400, 70, 'Change button mode', True)
+difficulty_slider = Slider(125, 220, 250, 100, 'Difficulty')
 
 # игровой цикл
 while True:
@@ -86,7 +85,7 @@ while True:
         difficulty_slider.slider_moved(screen)
 
         pygame.display.update()
-        clock.tick(15)
+        clock.tick(60)
         while button_next.next_page:
             for event in pygame.event.get():
 
@@ -140,11 +139,13 @@ while True:
 
             # отображение текущего счёта
             score_value_surface = title_font.render(str(game.score), True, Colors.white)
-            screen.blit(score_text, (365, 15))
+            screen.blit(score_text, score_text.get_rect(centerx=score_rect.centerx,
+                                                                      centery=score_rect.centery - 40))
+
             pygame.draw.rect(screen, Colors.black, score_rect, 0, 10)
             pygame.draw.rect(screen, Colors.grey, score_rect, 5, 10)
             screen.blit(score_value_surface, score_value_surface.get_rect(centerx=score_rect.centerx,
-                                                                      centery=score_rect.centery))
+                                                                      centery=score_rect.centery + 2))
 
             # отображение прошлых рекордов
             pygame.draw.rect(screen, Colors.black, record_rect, 0, 10)
@@ -152,7 +153,7 @@ while True:
             game.records.print_records(screen, lower_font)
 
             # место для отображения следующей фигуры
-            screen.blit(next_text, (375, 315))
+            screen.blit(next_text, next_text.get_rect(centerx=next_rect.centerx,centery=next_rect.centery - 105))
             pygame.draw.rect(screen, Colors.black, next_rect, 0, 10)
             pygame.draw.rect(screen, Colors.grey, next_rect, 5, 10)
 
@@ -161,8 +162,8 @@ while True:
 
             # конец игры
             if game.game_over:
-                screen.blit(game_over_text, (320, 550))
+                tetris.game_over(screen)
 
             # обновление экрана и частота обновления экрана
             pygame.display.update()
-            clock.tick(15)
+            clock.tick(60)
