@@ -78,9 +78,9 @@ while True:
         # кнопка смены режима работы смещения блока вниз (выкл - раз за нажатие, вкл - до нижней границы при зажатии)
         button_change_mode.button_pressed(screen)
         screen.blit(moving_modes_first, moving_modes_first.get_rect(centerx=button_change_mode.button_rect.centerx,
-                                                                      centery=button_change_mode.button_rect.centery + 45))
+                                                                      centery=button_change_mode.button_rect.centery + 50))
         screen.blit(moving_modes_second, moving_modes_second.get_rect(centerx=button_change_mode.button_rect.centerx,
-                                                                      centery=button_change_mode.button_rect.centery + 65))
+                                                                      centery=button_change_mode.button_rect.centery + 70))
         # ползунок опрделения сложности
         difficulty_slider.slider_moved(screen)
 
