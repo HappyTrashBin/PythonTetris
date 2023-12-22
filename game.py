@@ -22,7 +22,10 @@ class Game:
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.01)
+        pygame.mixer.music.set_volume(0.05)
+
+    def set_volume(self, volume):
+        pygame.mixer.music.set_volume(volume)
 
     # обновление текущего счёта
     def update_score(self, lines_cleared):
@@ -128,7 +131,7 @@ class Game:
         self.grid.draw(screen)
         self.current_block.draw(screen, 11, -79)
         if self.next_block.id == 3:
-            self.next_block.draw(screen, 255, 420)
+            self.next_block.draw(screen, 255, 390)
         elif self.next_block.id == 4:
             self.next_block.draw(screen, 255, 400)
         else:

@@ -15,6 +15,7 @@ class drawing:
         self.cell_size = Grid().cell_size
         self.colors = Colors.get_all_colors()
         self.game_over_text = self.lower_title_font.render("GAME OVER", True, Colors.white)
+        self.pause_text = self.lower_title_font.render("PAUSE", True, Colors.white)
 
     # нарисовать заголовок
     def draw_title(self, screen):
@@ -52,3 +53,12 @@ class drawing:
         pygame.draw.rect(screen, Colors.black, tetris_rect, 0, 15)
         pygame.draw.rect(screen, Colors.grey, tetris_rect, 3, 15)
         screen.blit(self.game_over_text, self.game_over_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))
+
+    def pause_screen(self, screen):
+        x, y = pygame.display.get_surface().get_size()
+        w, h = 250, 100
+        tetris_rect = pygame.Rect((x - w) / 2, (y - h) / 2, w, h)
+        pygame.draw.rect(screen, Colors.black, tetris_rect, 0, 15)
+        pygame.draw.rect(screen, Colors.grey, tetris_rect, 3, 15)
+        screen.blit(self.pause_text,
+                    self.pause_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))

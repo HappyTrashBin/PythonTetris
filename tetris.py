@@ -1,5 +1,6 @@
 import sys
 import pygame
+
 from game import Game
 from colors import Colors
 from button import Button
@@ -14,8 +15,8 @@ title_font = pygame.font.Font('BrassMono.ttf', 40)
 lower_font = pygame.font.Font('BrassMono.ttf', 20)
 score_text = title_font.render("Score", True, Colors.black)
 next_text = title_font.render("Next", True, Colors.black)
-moving_modes_first = lower_font.render("turn off - block moves down ones per pressing", True, Colors.black)
-moving_modes_second = lower_font.render("turn on - block moves down while pressing", True, Colors.black)
+moving_modes_first = lower_font.render("off - block moves down each pressing", True, Colors.black)
+moving_modes_second = lower_font.render("on - block moves down while pressing", True, Colors.black)
 tetris = drawing()
 
 score_rect = pygame.Rect(320, 45, 170, 50)
@@ -41,10 +42,12 @@ pygame.time.set_timer(GAME_UPDATE, 200)
 pause = True
 difficulty = 0
 moving_down_mode = False
+game_began = False
 button_main = Button(150, 455, 200, 70, 'Play', False)
 button_next = Button(50, 20, 400, 70, 'Begin game', False)
 button_change_mode = Button(50, 100, 400, 70, 'Change button mode', True)
 difficulty_slider = Slider(125, 220, 250, 100, 'Difficulty')
+sound_slider = Slider(125, 330, 250, 100, 'Sound')
 
 # игровой цикл
 while True:
@@ -82,7 +85,11 @@ while True:
         screen.blit(moving_modes_second, moving_modes_second.get_rect(centerx=button_change_mode.button_rect.centerx,
                                                                       centery=button_change_mode.button_rect.centery + 70))
         # ползунок опрделения сложности
-        difficulty_slider.slider_moved(screen)
+        difficulty_slider.draw_slider(screen)
+
+        sound_slider.draw_slider(screen)
+
+        game.set_volume(sound_slider.value)
 
         pygame.display.update()
         clock.tick(60)
@@ -98,6 +105,7 @@ while True:
                 # до тех пор, пока не нажата любая клавиша, игра стоит на паузе
                 if event.type == pygame.KEYDOWN:
                     pause = False
+                    game_began = True
 
                     # конец игры
                     if game.game_over:
@@ -121,11 +129,14 @@ while True:
                     if event.key == pygame.K_SPACE:
                         game.reset()
 
+                    if event.key == pygame.K_ESCAPE:
+                        pause = not pause
+
                     # счётчик сложности и скорости пассивного движения блоков
                 if event.type == GAME_UPDATE and not game.game_over and not pause:
                     game.move_down()
                     if difficulty < 125:
-                        difficulty += 0.1 + difficulty_slider.difficulty * 2
+                        difficulty += 0.1 + difficulty_slider.value * 2 / 5
                         pygame.time.set_timer(GAME_UPDATE, 300 - round(difficulty))
 
             # движение вниз при зажатии
@@ -163,6 +174,9 @@ while True:
             # конец игры
             if game.game_over:
                 tetris.game_over(screen)
+
+            if pause and game_began:
+                tetris.pause_screen(screen)
 
             # обновление экрана и частота обновления экрана
             pygame.display.update()
