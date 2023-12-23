@@ -26,10 +26,12 @@ class Game:
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(self.main_volume)
 
+    # изменить основной звук
     def set_main_volume(self, volume):
         self.main_volume = volume
         pygame.mixer.music.set_volume(self.main_volume)
 
+    # изменить неосновной звук
     def set_other_volume(self, volume):
         self.other_volume = volume
         self.rotate_sound.set_volume(self.other_volume)
@@ -48,23 +50,26 @@ class Game:
         self.blocks.remove(block)
         return block
 
-    # сдвинуть влево, вправо, вниз
+    # сдвинуть влево
     def move_left(self):
         self.current_block.move(0, -1)
         if not self.block_inside() or not self.block_fits():
             self.current_block.move(0, 1)
 
+    # сдвинуть вправо
     def move_right(self):
         self.current_block.move(0, 1)
         if not self.block_inside() or not self.block_fits():
             self.current_block.move(0, -1)
 
+    # сдвинуть вниз
     def move_down(self):
         self.current_block.move(1, 0)
         if not self.block_inside() or not self.block_fits():
             self.current_block.move(-1, 0)
             self.lock_block()
 
+    # сдвинуть вниз на декоративном фоне
     def move_down_in_main(self, screen):
         self.current_block.move(1, 0)
         tiles = self.current_block.get_cell_positions()
@@ -119,6 +124,7 @@ class Game:
         else:
             self.rotate_sound.play()
 
+    # поворот блока на декоративном фоне
     def rotate_main(self):
         if self.rotate:
             for i in range(random.randint(0, 3)):

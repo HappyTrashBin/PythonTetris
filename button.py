@@ -55,6 +55,7 @@ class Button:
         screen.blit(self.button_text, self.button_text.get_rect(centerx=self.button_rect.centerx,
                                                                 centery=self.button_rect.centery))
 
+    # установить громкость звука кнопки
     def set_button_sound(self, volume):
         self.button_volume = volume
         self.button_sound.set_volume(self.button_volume)

@@ -47,6 +47,7 @@ class Drawing:
         self.game.rotate_main()
         self.game.rotate = False
 
+    # отрисовка окна окончания игры
     def game_over(self, screen):
         x, y = pygame.display.get_surface().get_size()
         w, h = 250, 100
@@ -56,6 +57,7 @@ class Drawing:
         screen.blit(self.game_over_text, self.game_over_text.get_rect(centerx=tetris_rect.centerx,
                                                                       centery=tetris_rect.centery + 2))
 
+    # отрисовка окна паузы
     def pause_screen(self, screen):
         x, y = pygame.display.get_surface().get_size()
         w, h = 250, 100
@@ -65,6 +67,7 @@ class Drawing:
         screen.blit(self.pause_text,
                     self.pause_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))
 
+    # отрисовка движущегося заднего фона
     def draw_moving_background(self, screen, rows, columns, offset):
         for row in range(rows + 1):
             for column in range(columns + 1):

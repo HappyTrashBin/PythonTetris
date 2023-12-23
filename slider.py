@@ -41,6 +41,7 @@ class Slider:
 
         self.mouse_flag = False
 
+    # нарисовать ползунок, проверить на перемещение
     def draw_slider(self, screen):
         mouse_pos = pygame.mouse.get_pos()
         pygame.draw.rect(screen, self.moving_part_color, self.moving_part_rect, 0, 10)
@@ -71,6 +72,7 @@ class Slider:
         screen.blit(self.text, self.text.get_rect(centerx=self.slider_space.centerx,
                                                   centery=self.slider_space.centery - 25))
 
+    # установить громкость звука ползунка
     def set_slider_sound(self, volume):
         self.button_volume = volume
         self.button_sound.set_volume(self.button_volume)

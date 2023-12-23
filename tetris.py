@@ -34,7 +34,7 @@ clock = pygame.time.Clock()
 # вызов основного класса Game
 game = Game()
 
-# создание отдельного события для расчёта сложности и скорости пассивного движения блоков
+# создание отдельного события для расчёта сложности, переменной времени и скорости пассивного движения блоков
 GAME_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(GAME_UPDATE, 200)
 
@@ -54,13 +54,14 @@ other_sound_slider = Slider(125, 440, 250, 100, 'Other sound')
 while True:
     # главное окно
     for event in pygame.event.get():
+        # закрытие окна
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
 
+    # оформление
     screen.fill(Colors.white)
     tetris.draw_background(screen, 21, 18)
-
     tetris.draw_main(screen)
 
     # кнопка перехода на экран настроек
@@ -72,9 +73,12 @@ while True:
     while button_main.next_page:
         # окно настроек
         for event in pygame.event.get():
+            # закрытие окна
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+        # оформление
         screen.fill(Colors.silver)
 
         # кнопка перехода на игровое окно
@@ -92,11 +96,12 @@ while True:
                     )
         # ползунок определения сложности
         difficulty_slider.draw_slider(screen)
-
+        # ползунок определения основного звука
         main_sound_slider.draw_slider(screen)
-
+        # ползунок определения неосновного звука
         other_sound_slider.draw_slider(screen)
 
+        # изменение звука в зависимости от значения ползунков
         game.set_main_volume(main_sound_slider.value)
         game.set_other_volume(other_sound_slider.value)
         button_next.set_button_sound(other_sound_slider.value)
@@ -108,6 +113,7 @@ while True:
         pygame.display.update()
         clock.tick(60)
         while button_next.next_page:
+            # игровое окно
             for event in pygame.event.get():
 
                 # закрытие окна
@@ -142,10 +148,11 @@ while True:
                     if event.key == pygame.K_SPACE:
                         game.reset()
 
+                    # пауза в процессе игры
                     if event.key == pygame.K_ESCAPE:
                         pause = True
 
-                    # счётчик сложности и скорости пассивного движения блоков
+                # счётчик сложности, скорости пассивного движения блоков и изменения временной переменной
                 if event.type == GAME_UPDATE and not game.game_over and not pause:
                     game.move_down()
                     current_time += 1
@@ -191,6 +198,7 @@ while True:
             if game.game_over:
                 tetris.game_over(screen)
 
+            # пауза
             if pause:
                 tetris.pause_screen(screen)
 

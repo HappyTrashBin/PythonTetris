@@ -49,6 +49,7 @@ class Record:
         create_table(self.numbers)
         clear_all()
 
+    # сохранить рекорды
     def save_records(self):
         clear_all()
         create_table(self.numbers)
