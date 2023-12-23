@@ -5,7 +5,7 @@ from game import Game
 import random
 
 
-class drawing:
+class Drawing:
     def __init__(self):
         self.main_title_font = pygame.font.Font('BrassMono.ttf', 100)
         self.lower_title_font = pygame.font.Font('BrassMono.ttf', 40)
@@ -25,7 +25,8 @@ class drawing:
         for i in range(len(self.letters)):
             tetris_surface = self.main_title_font.render(self.letters[i], True, self.colors[i+1])
             screen.blit(tetris_surface,
-                        tetris_surface.get_rect(centerx=tetris_rect.centerx - 122 + 49*i, centery=tetris_rect.centery + 7))
+                        tetris_surface.get_rect(centerx=tetris_rect.centerx - 122 + 49*i,
+                                                centery=tetris_rect.centery + 7))
 
     # нарисовать фон в виде игрового поля
     def draw_background(self, screen, rows, columns):
@@ -52,7 +53,8 @@ class drawing:
         tetris_rect = pygame.Rect((x-w)/2, (y-h)/2, w, h)
         pygame.draw.rect(screen, Colors.black, tetris_rect, 0, 15)
         pygame.draw.rect(screen, Colors.grey, tetris_rect, 3, 15)
-        screen.blit(self.game_over_text, self.game_over_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))
+        screen.blit(self.game_over_text, self.game_over_text.get_rect(centerx=tetris_rect.centerx,
+                                                                      centery=tetris_rect.centery + 2))
 
     def pause_screen(self, screen):
         x, y = pygame.display.get_surface().get_size()

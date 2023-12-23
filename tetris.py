@@ -4,7 +4,7 @@ import pygame
 from game import Game
 from colors import Colors
 from button import Button
-from drawing import drawing
+from drawing import Drawing
 from slider import Slider
 
 # pygame инициализация
@@ -17,7 +17,7 @@ score_text = title_font.render("Score", True, Colors.black)
 next_text = title_font.render("Next", True, Colors.black)
 moving_modes_first = lower_font.render("off - block moves down each pressing", True, Colors.black)
 moving_modes_second = lower_font.render("on - block moves down while pressing", True, Colors.black)
-tetris = drawing()
+tetris = Drawing()
 
 score_rect = pygame.Rect(320, 45, 170, 50)
 record_rect = pygame.Rect(320, 100, 170, 210)
@@ -34,7 +34,7 @@ clock = pygame.time.Clock()
 # вызов основного класса Game
 game = Game()
 
-# создание отдельного события для рассчёта сложности и скорости пассивного движения блоков
+# создание отдельного события для расчёта сложности и скорости пассивного движения блоков
 GAME_UPDATE = pygame.USEREVENT
 pygame.time.set_timer(GAME_UPDATE, 200)
 
@@ -81,10 +81,14 @@ while True:
         # кнопка смены режима работы смещения блока вниз (выкл - раз за нажатие, вкл - до нижней границы при зажатии)
         button_change_mode.button_pressed(screen)
         screen.blit(moving_modes_first, moving_modes_first.get_rect(centerx=button_change_mode.button_rect.centerx,
-                                                                      centery=button_change_mode.button_rect.centery + 50))
+                                                                    centery=button_change_mode.button_rect.centery + 50
+                                                                    )
+                    )
         screen.blit(moving_modes_second, moving_modes_second.get_rect(centerx=button_change_mode.button_rect.centerx,
-                                                                      centery=button_change_mode.button_rect.centery + 70))
-        # ползунок опрделения сложности
+                                                                      centery=button_change_mode.button_rect.centery+70
+                                                                      )
+                    )
+        # ползунок определения сложности
         difficulty_slider.draw_slider(screen)
 
         sound_slider.draw_slider(screen)
@@ -118,14 +122,15 @@ while True:
                         game.move_left()
                     if event.key == pygame.K_RIGHT and not game.game_over and not pause:
                         game.move_right()
-                    if event.key == pygame.K_DOWN and not game.game_over and not pause and not button_change_mode.moving_down_mode:
+                    if (event.key == pygame.K_DOWN and not game.game_over and not pause and
+                            not button_change_mode.moving_down_mode):
                         game.move_down()
 
                     # поворот блока
                     if event.key == pygame.K_UP and not game.game_over and not pause:
                         game.rotate()
 
-                    # запуск игровой сессии заного
+                    # запуск игровой сессии заново
                     if event.key == pygame.K_SPACE:
                         game.reset()
 
@@ -151,12 +156,12 @@ while True:
             # отображение текущего счёта
             score_value_surface = title_font.render(str(game.score), True, Colors.white)
             screen.blit(score_text, score_text.get_rect(centerx=score_rect.centerx,
-                                                                      centery=score_rect.centery - 40))
+                                                        centery=score_rect.centery - 40))
 
             pygame.draw.rect(screen, Colors.black, score_rect, 0, 10)
             pygame.draw.rect(screen, Colors.grey, score_rect, 5, 10)
             screen.blit(score_value_surface, score_value_surface.get_rect(centerx=score_rect.centerx,
-                                                                      centery=score_rect.centery + 2))
+                                                                          centery=score_rect.centery + 2))
 
             # отображение прошлых рекордов
             pygame.draw.rect(screen, Colors.black, record_rect, 0, 10)
@@ -164,7 +169,8 @@ while True:
             game.records.print_records(screen, lower_font)
 
             # место для отображения следующей фигуры
-            screen.blit(next_text, next_text.get_rect(centerx=next_rect.centerx,centery=next_rect.centery - 105))
+            screen.blit(next_text, next_text.get_rect(centerx=next_rect.centerx,
+                                                      centery=next_rect.centery - 105))
             pygame.draw.rect(screen, Colors.black, next_rect, 0, 10)
             pygame.draw.rect(screen, Colors.grey, next_rect, 5, 10)
 

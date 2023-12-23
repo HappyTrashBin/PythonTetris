@@ -19,13 +19,15 @@ class Game:
         self.game_over_sound = pygame.mixer.Sound("Sounds/game_over.mp3")
         self.next = True
         self.rotate_flag = True
+        self.volume = 0.05
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.05)
+        pygame.mixer.music.set_volume(self.volume)
 
     def set_volume(self, volume):
-        pygame.mixer.music.set_volume(volume)
+        self.volume = volume
+        pygame.mixer.music.set_volume(self.volume)
 
     # обновление текущего счёта
     def update_score(self, lines_cleared):

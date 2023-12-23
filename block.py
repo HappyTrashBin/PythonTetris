@@ -4,8 +4,8 @@ from position import Position
 
 
 class Block:
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, index):
+        self.id = index
         self.cells = {}
         self.cell_size = 30
         self.row_block = 0

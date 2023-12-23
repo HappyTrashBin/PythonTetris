@@ -53,4 +53,4 @@ class Button:
 
         pygame.draw.rect(screen, self.active, self.button_rect, 3, 10)
         screen.blit(self.button_text, self.button_text.get_rect(centerx=self.button_rect.centerx,
-                                                                      centery=self.button_rect.centery))
+                                                                centery=self.button_rect.centery))

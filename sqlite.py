@@ -1,7 +1,7 @@
 import sqlite3 as sql
 
 
-def create_table(list):
+def create_table(list_of):
     connection = sql.connect('records.db')
     cursor = connection.cursor()
     cursor.execute('''
@@ -13,8 +13,8 @@ def create_table(list):
     connection.commit()
 
     connection.close()
-    for i in range(len(list)-1):
-        insert_record(i + 1, list[i])
+    for i in range(len(list_of) - 1):
+        insert_record(i + 1, list_of[i])
 
 
 def clear_all():
@@ -25,12 +25,12 @@ def clear_all():
     connection.close()
 
 
-def insert_record(id, birth_year):
+def insert_record(index, birth_year):
     connection = sql.connect('records.db')
     cursor = connection.cursor()
     cursor.execute('''
         INSERT INTO records (id, birth_year) VALUES (?, ?)
-    ''', (id, birth_year))
+    ''', (index, birth_year))
     connection.commit()
     connection.close()
 
