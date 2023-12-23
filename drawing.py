@@ -64,3 +64,12 @@ class Drawing:
         pygame.draw.rect(screen, Colors.grey, tetris_rect, 3, 15)
         screen.blit(self.pause_text,
                     self.pause_text.get_rect(centerx=tetris_rect.centerx, centery=tetris_rect.centery + 2))
+
+    def draw_moving_background(self, screen, rows, columns, offset):
+        for row in range(rows + 1):
+            for column in range(columns + 1):
+                if offset > 29:
+                    offset = offset - 30 * (offset // 30)
+                cell_rect = pygame.Rect(column * self.cell_size - offset, row * self.cell_size - offset,
+                                        self.cell_size - 1, self.cell_size - 1)
+                pygame.draw.rect(screen, Colors.white, cell_rect)

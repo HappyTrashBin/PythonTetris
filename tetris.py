@@ -42,6 +42,7 @@ pygame.time.set_timer(GAME_UPDATE, 200)
 pause = True
 difficulty = 0
 moving_down_mode = False
+current_time = 0
 button_main = Button(150, 455, 200, 70, 'Play', False)
 button_next = Button(50, 20, 400, 70, 'Begin game', False)
 button_change_mode = Button(50, 100, 400, 70, 'Change button mode', True)
@@ -56,6 +57,7 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
     screen.fill(Colors.white)
     tetris.draw_background(screen, 21, 18)
 
@@ -102,7 +104,6 @@ while True:
         difficulty_slider.set_slider_sound(other_sound_slider.value)
         main_sound_slider.set_slider_sound(other_sound_slider.value)
         other_sound_slider.set_slider_sound(other_sound_slider.value)
-        print(other_sound_slider.value)
 
         pygame.display.update()
         clock.tick(60)
@@ -147,6 +148,7 @@ while True:
                     # счётчик сложности и скорости пассивного движения блоков
                 if event.type == GAME_UPDATE and not game.game_over and not pause:
                     game.move_down()
+                    current_time += 1
                     if difficulty <= 450:
                         difficulty += 1 + difficulty_slider.value * 4
                         pygame.time.set_timer(GAME_UPDATE, 550 - round(difficulty))
@@ -158,7 +160,8 @@ while True:
                     game.move_down()
 
             # заполнение фона
-            screen.fill(Colors.silver)
+            screen.fill(Colors.black)
+            tetris.draw_moving_background(screen, 21, 18, current_time)
 
             # отображение текущего счёта
             score_value_surface = title_font.render(str(game.score), True, Colors.white)
