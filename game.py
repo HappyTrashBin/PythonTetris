@@ -19,15 +19,22 @@ class Game:
         self.game_over_sound = pygame.mixer.Sound("Sounds/game_over.mp3")
         self.next = True
         self.rotate_flag = True
-        self.volume = 0.05
+        self.main_volume = 0.05
+        self.other_volume = 0.05
 
         pygame.mixer.music.load("Sounds/tetris_sound.mp3")
         pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(self.volume)
+        pygame.mixer.music.set_volume(self.main_volume)
 
-    def set_volume(self, volume):
-        self.volume = volume
-        pygame.mixer.music.set_volume(self.volume)
+    def set_main_volume(self, volume):
+        self.main_volume = volume
+        pygame.mixer.music.set_volume(self.main_volume)
+
+    def set_other_volume(self, volume):
+        self.other_volume = volume
+        self.rotate_sound.set_volume(self.other_volume)
+        self.clear_sound.set_volume(self.other_volume)
+        self.game_over_sound.set_volume(self.other_volume)
 
     # обновление текущего счёта
     def update_score(self, lines_cleared):
@@ -81,12 +88,10 @@ class Game:
         rows_cleared = self.grid.clear_full_rows()
         if rows_cleared > 0:
             self.clear_sound.play()
-            self.clear_sound.set_volume(0.01)
             self.update_score(rows_cleared)
         if not self.block_fits():
             self.game_over = True
             self.game_over_sound.play()
-            self.game_over_sound.set_volume(0.01)
 
     # обновить игровое поле
     def reset(self):
@@ -113,7 +118,6 @@ class Game:
             self.current_block.undo_rotation()
         else:
             self.rotate_sound.play()
-            self.rotate_sound.set_volume(0.01)
 
     def rotate_main(self):
         if self.rotate:

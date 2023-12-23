@@ -10,7 +10,6 @@ class Colors:
     black = (0, 0, 0)
     silver = (192, 192, 192)
     grey = (128, 128, 128)
-
     gold = (255, 215, 0)
     dark_orange = (255, 71, 0)
 

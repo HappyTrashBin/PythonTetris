@@ -36,6 +36,11 @@ class Slider:
 
         self.text = self.font.render(self.slider_text, True, Colors.black)
 
+        self.button_sound = pygame.mixer.Sound("Sounds/button.mp3")
+        self.button_volume = 0.05
+
+        self.mouse_flag = False
+
     def draw_slider(self, screen):
         mouse_pos = pygame.mouse.get_pos()
         pygame.draw.rect(screen, self.moving_part_color, self.moving_part_rect, 0, 10)
@@ -57,6 +62,7 @@ class Slider:
                                 self.moving_part_rect.x - self.x - self.width / 10) / (
                                                      self.width * 8 / 10 - self.width * 0.08)) / self.bar_rect.width),
                                        2)
+                    self.button_sound.play()
 
         pygame.draw.rect(screen, self.background_color, self.slider_space, 0, 10)
         pygame.draw.rect(screen, self.bar_color, self.slider_space, 3, 10)
@@ -64,3 +70,7 @@ class Slider:
         pygame.draw.rect(screen, self.moving_part_color, self.moving_part_rect)
         screen.blit(self.text, self.text.get_rect(centerx=self.slider_space.centerx,
                                                   centery=self.slider_space.centery - 25))
+
+    def set_slider_sound(self, volume):
+        self.button_volume = volume
+        self.button_sound.set_volume(self.button_volume)

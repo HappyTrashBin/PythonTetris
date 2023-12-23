@@ -65,3 +65,4 @@ class Grid:
                 cell_rect = pygame.Rect(column * self.cell_size + 11, row * self.cell_size - 19, self.cell_size - 1,
                                         self.cell_size - 1)
                 pygame.draw.rect(screen, self.colors[cell_value], cell_rect)
+        pygame.draw.rect(screen, Colors.grey, pygame.Rect(8, -19, self.num_cols * self.cell_size + 6, self.num_rows * self.cell_size + 3), 5, 10)
