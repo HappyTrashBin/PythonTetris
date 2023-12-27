@@ -17,11 +17,10 @@ score_text = title_font.render("Score", True, Colors.black)
 next_text = title_font.render("Next", True, Colors.black)
 moving_modes_first = lower_font.render("off - block moves down each pressing", True, Colors.black)
 moving_modes_second = lower_font.render("on - block moves down while pressing", True, Colors.black)
-tetris = Drawing()
-
 score_rect = pygame.Rect(320, 45, 170, 50)
 record_rect = pygame.Rect(320, 100, 170, 210)
 next_rect = pygame.Rect(320, 345, 170, 180)
+tetris = Drawing()
 
 # создание экрана программы
 screen = pygame.display.set_mode((500, 620))
